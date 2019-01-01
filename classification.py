@@ -73,7 +73,7 @@ def classification(modelMode,model):
     nnTime = time.time()
     rfErr = 0.0
     
-    #classification via random forest
+    
     clf = RandomForestClassifier(n_estimators=20, max_depth=30, random_state = 0)
     clf.fit(xVec,y)
     result = clf.predict(txVec)
@@ -121,18 +121,21 @@ tx,ty = load_text('test.txt')
 
 
 #train a new model that base on word2vec
-model_w2v = Word2Vec(x,min_count=5,size=40)
+startTime = time.time()
 
+model_w2v = Word2Vec(x,min_count=5,size=40,workers=4)
+
+w2vTime = time.time()
 
 
 #train a new model that base on fastText
-model_FT = FastText(x, size = 40 , min_count = 5)
+model_FT = FastText(x, size = 40 , min_count = 5 ,workers=4)
+FTTime = time.time()
 
 
 
 
 
-startTime = time.time()
 w2vCla = classification("Word2Vec",model_w2v)
 
 
@@ -143,7 +146,8 @@ FFCla = classification("FastText",model_FT)
 for i in range(1):
     print ("Training data: %d" %(len(y)))
     print ("Testing data: %d" %(len(ty)))
-
+    print ("Word2Vec Training Time: %.2fs" % (w2vTime - startTime))
+    print ("FastText Training Time: %.2fs" % (FTTime - w2vTime))
     print ("Base on %s: 1-NN accuracy rate: %.2f%% , cost time: %.2f(s)" % (w2vCla[0],100-( w2vCla[1] / len(ty) * 100),(w2vCla[7] - w2vCla[6])))
     print ("Base on %s: Random Forest accuracy rate: %.2f%% , cost time: %.2f(s)" % (w2vCla[0],100-( w2vCla[2] / len(ty) * 100),(w2vCla[8] - w2vCla[7])))
     print ("Base on %s: SVM accuracy rate: %.2f%% , cost time: %.2f(s)" % (w2vCla[0],100-( w2vCla[3] / len(ty) * 100),(w2vCla[9] - w2vCla[8])))
