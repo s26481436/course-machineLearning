@@ -18,3 +18,9 @@ When the code has done, it will save the data as a .txt file automatically and i
 	We use these model to represent the train and test words to word vector by line by line and summarize these vectors, then we will get the data vector arrays.
 	Now, we can use these vector arrays to classification via Nearest Neighbor, Random Forest, SVM etc.
 	In this repository, we use Nearest Neighbor, Random Forest, SVM, Gaussian Naive Bayes as our classifier.
+
+# Train.txt Test.txt
+	Text file for model training and test classification.
+	Train.txt has 450 columns of text, test.txt has 50 columns of text.
+
+# These files are only for education research, not for commercial use.
